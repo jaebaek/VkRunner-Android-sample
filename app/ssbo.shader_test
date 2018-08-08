@@ -1,0 +1,39 @@
+R"(
+[require]
+fragmentStoresAndAtomics
+
+[vertex shader passthrough]
+
+[fragment shader binary]
+7230203 10000 80004 1f 0 20011 1 6000b 1 4c534c47 6474732e 3035342e 0 3000e 0 1
+6000f 4 4 6e69616d 0 9 30010 4 7 30003 2 1c2 40005 4 6e69616d 0 50005 9 6f6c6f63
+756f5f72 74 40005 c 636f6c62 6b 60006 c 0 6f6c6f63 6e695f72 0 60006 c 1 61697274
+656c676e 0 50006 c 2 65726874 65 30005 e 0 40047 9 1e 0 50048 c 0 23 0 50048 c 1
+23 10 50048 c 2 23 1c 30047 c 3 40047 e 22 0 40047 e 21 3 20013 2 30021 3 2
+30016 6 20 40017 7 6 4 40020 8 3 7 4003b 8 9 3 40017 a 6 3 40015 b 20 0 5001e c
+7 a b 40020 d 2 c 4003b d e 2 40015 f 20 1 4002b f 10 0 40020 11 2 7 4002b f 14
+2 4002b b 15 3 40020 16 2 b 4002b f 18 1 4002b 6 19 40400000 4002b 6 1a 40800000
+4002b 6 1b 40a00000 6002c a 1c 19 1a 1b 40020 1d 2 a 50036 2 4 0 3 200f8 5 50041
+11 12 e 10 4003d 7 13 12 3003e 9 13 50041 16 17 e 14 3003e 17 15 50041 1d 1e e
+18 3003e 1e 1c 100fd 10038
+
+[test]
+clear
+
+# Set color_in
+ssbo 3 subdata vec4 0 0.0 1.0 0.0 1.0
+
+# Clear other values
+ssbo 3 subdata vec3 16 0.0 0.0 0.0
+ssbo 3 subdata uint 28 0
+
+draw rect -1 -1 2 2
+
+# Probe the buffer to make sure that reading the SSBO worked
+probe all rgba 0.0 1.0 0.0 1.0
+
+# Probe the SSBO to check that writing worked
+probe ssbo vec3 3 16 == 3 4 5
+probe ssbo uint 3 28 < 4
+probe ssbo uint 3 28 == 3
+)",

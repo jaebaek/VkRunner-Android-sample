@@ -1,0 +1,28 @@
+R"(
+[vertex shader passthrough]
+
+[fragment shader binary]
+7230203 10000 80004 1b 0 20011 1 6000b 1 4c534c47 6474732e 3035342e 0 3000e 0 1
+6000f 4 4 6e69616d 0 9 30010 4 7 30003 2 1ae 40005 4 6e69616d 0 50005 9 6f6c6f63
+756f5f72 74 40005 b 636f6c62 6b 40006 b 0 6d 30005 d 0 40047 9 1e 0 40048 b 0 4
+50048 b 0 23 0 50048 b 0 7 10 30047 b 2 40047 d 22 0 40047 d 21 5 20013 2 30021
+3 2 30016 6 20 40017 7 6 4 40020 8 3 7 4003b 8 9 3 40018 a 7 3 3001e b a 40020 c
+2 b 4003b c d 2 40015 e 20 1 4002b e f 0 40020 10 2 7 4002b e 13 1 4002b e 17 2
+50036 2 4 0 3 200f8 5 60041 10 11 d f f 4003d 7 12 11 60041 10 14 d f 13 4003d 7
+15 14 50081 7 16 12 15 60041 10 18 d f 17 4003d 7 19 18 50081 7 1a 16 19 3003e 9
+1a 100fd 10038
+
+[test]
+clear
+
+# The shader uses a mat3x4 that it is specified on row_major
+# layout. So we need to manually re-sort it here when specify the
+# data.
+uniform ubo 5 vec3 0  0.11 0.21 0.31
+uniform ubo 5 vec3 16 0.12 0.22 0.32
+uniform ubo 5 vec3 32 0.13 0.23 0.33
+uniform ubo 5 vec3 48 0.14 0.24 0.34
+
+draw rect -1 -1 2 2
+
+probe all rgba 0.63 0.66 0.69 0.72)",

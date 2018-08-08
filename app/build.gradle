@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+
+def ROOT = 'src/main'
+
+android {
+    compileSdkVersion 23
+
+    defaultConfig {
+        applicationId "com.vkrunner"
+        minSdkVersion 15
+        targetSdkVersion 23
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path 'Android.mk'
+        }
+    }
+    sourceSets {
+        main {
+            manifest.srcFile "${ROOT}/AndroidManifest.xml"
+            java.srcDirs = ["${ROOT}/java"]
+            res.srcDirs = ["${ROOT}/res"]
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                          'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:23.4.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta3'
+}
+

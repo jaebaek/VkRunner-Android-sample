@@ -1,0 +1,6 @@
+.gradle/
+app/.externalNativeBuild/
+app/build/
+app/src/main/res/layout/
+app/src/main/res/values-w820dp/
+build

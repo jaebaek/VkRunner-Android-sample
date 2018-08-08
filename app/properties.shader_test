@@ -1,0 +1,57 @@
+R"(
+[require]
+wideLines
+logicOp
+
+[vertex shader passthrough]
+
+[fragment shader binary]
+7230203 10000 80004 c 0 20011 1 6000b 1 4c534c47 6474732e 3035342e 0 3000e 0 1
+6000f 4 4 6e69616d 0 9 30010 4 7 30003 2 1c2 40005 4 6e69616d 0 50005 9 6f6c6f63
+756f5f72 74 40047 9 1e 0 20013 2 30021 3 2 30016 6 20 40017 7 6 4 40020 8 3 7
+4003b 8 9 3 4002b 6 a 3f800000 7002c 7 b a a a a 50036 2 4 0 3 200f8 5 3003e 9 b
+100fd 10038
+
+[vertex data]
+0/R32G32_SFLOAT
+-0.5 -0.5
+0.5 -0.5
+
+[test]
+clear
+
+# Red rectangle in the top left
+colorWriteMask VK_COLOR_COMPONENT_R_BIT
+draw rect -1 -1 1 1
+
+# Yellow rectangle in the top right
+colorWriteMask VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT
+draw rect 0 -1 1 1
+
+# Blue at the bottom
+colorWriteMask VK_COLOR_COMPONENT_B_BIT
+draw rect -1 0 2 1
+
+# A wide line across the top that inverts the red and blue channels
+lineWidth 4.0
+colorWriteMask VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_B_BIT
+logicOpEnable true
+logicOp VK_LOGIC_OP_XOR
+draw arrays LINE_LIST 0 2
+logicOpEnable false
+
+# Two rectangles, one gets culled, one doesn’t
+colorWriteMask VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT
+cullMode VK_CULL_MODE_FRONT_BIT
+frontFace VK_FRONT_FACE_CLOCKWISE
+draw rect -1 -1 2 2
+cullMode VK_CULL_MODE_BACK_BIT
+draw rect 0.8 0 0.2 1
+
+relative probe rect rgb (0.0, 0.0, 0.5, 0.2) (1.0, 0.0, 0.0)
+relative probe rect rgb (0.5, 0.0, 0.5, 0.2) (1.0, 1.0, 0.0)
+relative probe rect rgb (0.26, 0.25, 0.23, 0.009) (0.0, 0.0, 1.0)
+relative probe rect rgb (0.51, 0.25, 0.23, 0.009) (0.0, 1.0, 1.0)
+relative probe rect rgb (0.0, 0.5, 0.9, 0.5) (0.0, 0.0, 1.0)
+relative probe rect rgb (0.9, 0.5, 0.1, 0.5) (1.0, 1.0, 1.0)
+)",

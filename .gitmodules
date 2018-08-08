@@ -1,0 +1,3 @@
+[submodule "external/vkrunner"]
+	path = external/vkrunner
+	url = https://github.com/Igalia/vkrunner.git

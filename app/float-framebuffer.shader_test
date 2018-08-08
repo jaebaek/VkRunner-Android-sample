@@ -1,0 +1,23 @@
+R"(
+[require]
+# Use a floating-point framebuffer format. This format is required to
+# be supported by the Vulkan driver. We can use this to get more
+# information when probing values by directly storing the results in
+# the framebuffer.
+framebuffer R32G32B32A32_SFLOAT
+
+[vertex shader passthrough]
+
+[fragment shader binary]
+7230203 10000 80004 12 0 20011 1 6000b 1 4c534c47 6474732e 3035342e 0 3000e 0 1
+6000f 4 4 6e69616d 0 9 30010 4 7 30003 2 1ae 40005 4 6e69616d 0 40005 9 6f6c6f63
+72 40047 9 1e 0 20013 2 30021 3 2 30016 6 20 40017 7 6 4 40020 8 3 7 4003b 8 9 3
+4002b 6 a 40490fdb 4002b 6 b 42280000 4002b 6 c 3fb504f3 4002b 6 d 40000000
+4002b 6 e 40400000 4002b 6 f 3f800000 50036 2 4 0 3 200f8 5 8000c 6 10 1 32 d e
+f 70050 7 11 a b c 10 3003e 9 11 100fd 10038
+
+[test]
+clear
+draw rect -1 -1 2 2
+probe all rgba 3.141592653589793 42.0 1.4142135623730951 7.0
+)",
