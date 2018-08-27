@@ -1,0 +1,71 @@
+[require]
+fragmentStoresAndAtomics
+
+[vertex shader passthrough]
+
+[fragment shader]
+#version 450
+
+layout(location = 0) out vec4 color_out;
+
+layout(set = 0, binding = 5) buffer block1 {
+        vec4 set0_binding5;
+        vec4 set0_binding5_result;
+};
+
+layout(set = 1, binding = 3) buffer block2 {
+        vec4 set1_binding3;
+        vec4 set1_binding3_result;
+};
+
+layout(set = 1, binding = 5) buffer block3 {
+        vec4 set1_binding5;
+        vec4 set1_binding5_result;
+};
+
+layout(set = 2, binding = 0) buffer block5 {
+        vec4 set2_binding0;
+        vec4 set2_binding0_result;
+};
+
+void
+main()
+{
+        // Descriptor set and binding test
+        set0_binding5_result = set1_binding3;
+        set1_binding3_result = set1_binding5;
+        set1_binding5_result = set2_binding0;
+        set2_binding0_result = set0_binding5;
+
+        color_out = set0_binding5;
+}
+
+[test]
+clear
+
+# Descriptor set and binding test
+ssbo 5 subdata vec4 0 0.5 0.5 0.5 0.5
+ssbo 1:3 subdata vec4 0 1.3 1.3 1.3 1.3
+ssbo 1:5 subdata vec4 0 1.5 1.5 1.5 1.5
+ssbo 2:0 subdata vec4 0 2.0 2.0 2.0 2.0
+
+ssbo 5 subdata vec4 16 0.5 0.5 0.5 0.5
+ssbo 1:3 subdata vec4 16 1.3 1.3 1.3 1.3
+ssbo 1:5 subdata vec4 16 1.5 1.5 1.5 1.5
+ssbo 2:0 subdata vec4 16 2.0 2.0 2.0 2.0
+
+draw rect -1 -1 2 2
+
+# Descriptor set and binding test
+#
+# Note that floating point values might not be exactly same
+# and we allow small errors i.e., 0.000001
+#
+probe ssbo vec4 0:5 16 >  1.299999 1.299999 1.299999 1.299999
+probe ssbo vec4 0:5 16 <  1.300001 1.300001 1.300001 1.300001
+probe ssbo vec4 1:3 16 >  1.499999 1.499999 1.499999 1.499999
+probe ssbo vec4 1:3 16 <  1.500001 1.500001 1.500001 1.500001
+probe ssbo vec4 1:5 16 >  1.999999 1.999999 1.999999 1.999999
+probe ssbo vec4 1:5 16 <  2.000001 2.000001 2.000001 2.000001
+probe ssbo vec4 2:0 16 >  0.499999 0.499999 0.499999 0.499999
+probe ssbo vec4 2:0 16 <  0.500001 0.500001 0.500001 0.500001

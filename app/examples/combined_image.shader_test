@@ -1,0 +1,96 @@
+#ifndef COMBINED_IMAGE_SHADER_TEST_H
+#define COMBINED_IMAGE_SHADER_TEST_H
+"app/examples/combined_image.shader_test",
+R"(
+[vertex shader binary]
+7230203 10000 80004 1b 0 20011 1 6000b 1 4c534c47 6474732e 3035342e 0 3000e 0 1
+9000f 0 4 6e69616d 0 d 11 17 19 30003 2 1ae 40005 4 6e69616d 0 60005 b 505f6c67
+65567265 78657472 0 60006 b 0 505f6c67 7469736f 6e6f69 70006 b 1 505f6c67
+746e696f 657a6953 0 70006 b 2 435f6c67 4470696c 61747369 65636e 30005 d 0 50005
+11 69736f70 6e6f6974 0 60005 17 67617266 7865745f 726f6f43 64 60005 19 74726576
+7865745f 726f6f63 64 50048 b 0 b 0 50048 b 1 b 1 50048 b 2 b 3 30047 b 2 40047
+11 1e 0 40047 17 1e 0 40047 19 1e 1 20013 2 30021 3 2 30016 6 20 40017 7 6 4
+40015 8 20 0 4002b 8 9 1 4001c a 6 9 5001e b 7 6 a 40020 c 3 b 4003b c d 3 40015
+e 20 1 4002b e f 0 40020 10 1 7 4003b 10 11 1 40020 13 3 7 40017 15 6 2 40020 16
+3 15 4003b 16 17 3 40020 18 1 15 4003b 18 19 1 50036 2 4 0 3 200f8 5 4003d 7 12
+11 50041 13 14 d f 3003e 14 12 4003d 15 1a 19 3003e 17 1a 100fd 10038
+
+[fragment shader binary]
+7230203 10000 80004 14 0 20011 1 6000b 1 4c534c47 6474732e 3035342e 0 3000e 0 1
+7000f 4 4 6e69616d 0 9 11 30010 4 7 30003 2 1ae 40005 4 6e69616d 0 50005 9
+6f6c6f63 756f5f72 74 50005 d 5f786574 706d6173 72656c 60005 11 67617266 7865745f
+726f6f43 64 40047 9 1e 0 40047 d 22 0 40047 d 21 1 40047 11 1e 0 20013 2 30021 3
+2 30016 6 20 40017 7 6 4 40020 8 3 7 4003b 8 9 3 90019 a 6 1 0 0 0 1 0 3001b b a
+40020 c 0 b 4003b c d 0 40017 f 6 2 40020 10 1 f 4003b 10 11 1 50036 2 4 0 3
+200f8 5 4003d b e d 4003d f 12 11 50057 7 13 e 12 3003e 9 13 100fd 10038
+
+[vertex data]
+0/R32G32_SFLOAT 1/R32G32_SFLOAT
+
+   1    1       1 1
+-0.6    1       0 1
+   1 -0.6       1 0
+-0.6    1       0 1
+   1 -0.6       1 0
+-0.6 -0.6       0 0
+
+[test]
+clear
+
+# *** Combined image sampler related commands ***
+#
+# 1. Create default combined
+# combined [set:bind] (width, height) format color
+# e.g.,
+# combined 0:1 (8, 8) R8G8B8A8_UNORM rgbw
+#
+# 2. Change filter attributes
+# combined filter [set:bind] [magFilter] [minFilter]
+# e.g.,
+# combined filter 0:1 VK_FILTER_NEAREST VK_FILTER_NEAREST
+#
+# 3. Change mipmap mode
+# combined mipmap [set:bind] [mipmapMode]
+# e.g.,
+# combined mipmap 0:1 VK_SAMPLER_MIPMAP_MODE_NEAREST
+#
+# 4. Change address modes for U, V, and W
+# combined address [set:bind] [addressModeU] [addressModeV] [addressModeW]
+# e.g.,
+# combined address 0:1 VK_SAMPLER_ADDRESS_MODE_REPEAT VK_SAMPLER_ADDRESS_MODE_REPEAT VK_SAMPLER_ADDRESS_MODE_REPEAT
+#
+# 5. Change unnormalizedCoordinates
+# combined norm [set:bind] [normalizedCoordinates]
+#   --> normalizedCoordinates must be 0 for unnormalizedCoordinates = VK_TRUE
+#                                 and 1 for unnormalizedCoordinates = VK_FALSE
+# e.g.,
+# combined norm 0:1 0
+#   --> it means setting "unnormalizedCoordinates" attribute as VK_TRUE
+# combined norm 0:1 1
+#   --> it means setting "unnormalizedCoordinates" attribute as VK_FALSE
+#
+# 6. Change level of detail i.e., Lod
+# combined lod [set:bind] [minLod] [maxLod] [mipLodBias]
+#   --> minLod, maxLod, and mipLodBias must be float values
+# e.g.,
+# combined lod 0:1 0.0 0.0 0.0
+#
+# 7. Change other attributes
+# combined extra [set:bind] [maxAnisotropy] [compareOp] [borderColor]
+# e.g.,
+# combined extra 0:1 1 VK_COMPARE_OP_NEVER VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE
+
+combined 0:1 (8, 8) R8G8B8A8_UNORM rgbw
+combined filter 0:1 VK_FILTER_NEAREST VK_FILTER_NEAREST
+combined mipmap 0:1 VK_SAMPLER_MIPMAP_MODE_NEAREST
+combined address 0:1 VK_SAMPLER_ADDRESS_MODE_REPEAT VK_SAMPLER_ADDRESS_MODE_REPEAT VK_SAMPLER_ADDRESS_MODE_REPEAT
+combined norm 0:1 1
+
+draw arrays TRIANGLE_LIST 0 6
+
+relative probe rect rgb (0.2, 0.2, 0.4, 0.4) (1, 0, 0)
+relative probe rect rgb (0.6, 0.2, 0.4, 0.4) (0, 1, 0)
+relative probe rect rgb (0.2, 0.6, 0.4, 0.4) (0, 0, 1)
+relative probe rect rgb (0.6, 0.6, 0.4, 0.4) (1, 1, 1)
+)",
+#endif

@@ -1,3 +1,6 @@
+#ifndef GEOMETRY_SHADER_TEST_H
+#define GEOMETRY_SHADER_TEST_H
+"app/examples/geometry.shader_test",
 R"(
 # Copyright (c) 2018 Google LLC.
 #
@@ -89,3 +92,4 @@ relative probe rect rgb (0.6, 0.6, 0.4, 0.4) (0, 1, 0)
 # check a single point
 relative probe rgb (0.5, 0.5) (0, 1, 0)
 )",
+#endif

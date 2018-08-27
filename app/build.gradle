@@ -2,6 +2,20 @@ apply plugin: 'com.android.application'
 
 def ROOT = 'src/main'
 
+def NDK_DIR
+if (project.rootProject.file('local.properties').exists()) {
+    Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        NDK_DIR = properties.getProperty('ndk.dir')
+}
+if (!NDK_DIR) {
+    NDK_DIR=System.getenv("ANDROID_NDK_HOME")
+}
+
+if(!NDK_DIR || NDK_DIR.empty) {
+    throw new GradleException('Environment Variable ANDROID_NDK_HOME for NDK path need to be setup')
+}
+
 android {
     compileSdkVersion 23
 
@@ -9,6 +23,17 @@ android {
         applicationId "com.vkrunner"
         minSdkVersion 15
         targetSdkVersion 23
+        externalNativeBuild {
+            cmake {
+                abiFilters "armeabi-v7a", 'arm64-v8a', 'x86', 'x86_64'
+                arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=c++_static'
+            }
+        }
+
+        packagingOptions {
+            doNotStrip '*/mips/*.so'
+            doNotStrip '*/mips64/*.so'
+        }
     }
 
     externalNativeBuild {
@@ -21,6 +46,8 @@ android {
             manifest.srcFile "${ROOT}/AndroidManifest.xml"
             java.srcDirs = ["${ROOT}/java"]
             res.srcDirs = ["${ROOT}/res"]
+            jniLibs.srcDirs file(NDK_DIR).absolutePath +
+            '/sources/third_party/vulkan/src/build-android/jniLibs'
         }
     }
     buildTypes {

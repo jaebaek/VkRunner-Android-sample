@@ -1,3 +1,6 @@
+#ifndef UBO_SHADER_TEST_H
+#define UBO_SHADER_TEST_H
+"app/examples/ubo.shader_test",
 R"(
 [vertex shader binary]
 7230203 10000 80004 43 0 20011 1 6000b 1 4c534c47 6474732e 3035342e 0 3000e 0 1
@@ -52,3 +55,4 @@ uniform ubo 3 vec4 0 -0.1 0.6 -0.3 0.6
 draw rect 0 -1 1 2
 relative probe rect rgba (0.0, 0.5, 1.0, 0.5) (0.0, 0.8, 0.0, 1.0)
 )",
+#endif

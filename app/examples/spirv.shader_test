@@ -1,3 +1,6 @@
+#ifndef SPIRV_SHADER_TEST_H
+#define SPIRV_SHADER_TEST_H
+"app/examples/spirv.shader_test",
 R"(
 [vertex shader binary]
 7230203 10200 70000 16 0 20011 1 6000b 1 4c534c47 6474732e 3035342e 0 3000e 0 1
@@ -33,3 +36,4 @@ probe rect rgba (138, 138, 112, 112) (1, 1, 1, 1)
 probe rect rgba (114, 0, 23, 250) (1, 0, 0, 1)
 probe rect rgba (0, 114, 250, 23) (1, 0, 0, 1)
 )",
+#endif

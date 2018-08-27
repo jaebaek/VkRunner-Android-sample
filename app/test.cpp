@@ -41,14 +41,6 @@ static void error_cb(const char *message, void *user_data) {
   LOGE("%s", message);
 }
 
-static void after_cb(const char *filename,
-                     enum vr_result result,
-                     void *user_data)
-{
-  LOGI("PIGLIT: {\"result\": \"%s\" }\n",
-       vr_result_to_string(result));
-}
-
 static const char *string_scripts[] = {
 #include "string_scripts.inc"
 };
@@ -60,21 +52,18 @@ Java_com_vkrunner_VkRunner_test( JNIEnv* env, jobject thiz );
 
 JNIEXPORT void JNICALL
 Java_com_vkrunner_VkRunner_test( JNIEnv* env, jobject thiz ) {
-  enum vr_result result;
-  struct vr_config *config;
-  struct vr_executor *executor;
+  struct vr_executor *executor = vr_executor_new();
 
-  config = vr_config_new();
-  vr_config_set_error_cb(config, error_cb);
-  vr_config_set_after_test_cb(config, after_cb);
+  vr_executor_set_error_cb(executor, error_cb);
 
-  for (int i = 0;i < sizeof(string_scripts) / sizeof(char *); ++i)
-    vr_config_add_script_string(config, string_scripts[i]);
-
-  executor = vr_executor_new();
-  result = vr_executor_execute(executor, config);
+  for (int i = 0;i < sizeof(string_scripts) / sizeof(char *); i += 2) {
+    struct vr_source *source = vr_source_from_string(string_scripts[i + 1]);
+    enum vr_result result = vr_executor_execute(executor, source);
+    vr_source_free(source);
+    LOGI("result of \"%s\": \"%s\"\n",
+         string_scripts[i],
+         vr_result_to_string(result));
+  }
 
   vr_executor_free(executor);
-
-  vr_config_free(config);
 }

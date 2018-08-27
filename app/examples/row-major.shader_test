@@ -1,3 +1,6 @@
+#ifndef ROW_MAJOR_SHADER_TEST_H
+#define ROW_MAJOR_SHADER_TEST_H
+"app/examples/row-major.shader_test",
 R"(
 [vertex shader passthrough]
 
@@ -26,3 +29,4 @@ uniform ubo 5 vec3 48 0.14 0.24 0.34
 draw rect -1 -1 2 2
 
 probe all rgba 0.63 0.66 0.69 0.72)",
+#endif

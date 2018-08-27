@@ -1,3 +1,6 @@
+#ifndef COMPUTE_SHADER_SHADER_TEST_H
+#define COMPUTE_SHADER_SHADER_TEST_H
+"app/examples/compute-shader.shader_test",
 R"(
 [compute shader binary]
 7230203 10000 80004 24 0 20011 1 6000b 1 4c534c47 6474732e 3035342e 0 3000e 0 1
@@ -31,3 +34,4 @@ probe ssbo vec2 3 524280 == 255 255
 # Center
 probe ssbo vec2 3 263168 == 128 128
 )",
+#endif

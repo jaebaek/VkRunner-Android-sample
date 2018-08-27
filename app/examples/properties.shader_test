@@ -1,3 +1,6 @@
+#ifndef PROPERTIES_SHADER_TEST_H
+#define PROPERTIES_SHADER_TEST_H
+"app/examples/properties.shader_test",
 R"(
 [require]
 wideLines
@@ -55,3 +58,4 @@ relative probe rect rgb (0.51, 0.25, 0.23, 0.009) (0.0, 1.0, 1.0)
 relative probe rect rgb (0.0, 0.5, 0.9, 0.5) (0.0, 0.0, 1.0)
 relative probe rect rgb (0.9, 0.5, 0.1, 0.5) (1.0, 1.0, 1.0)
 )",
+#endif

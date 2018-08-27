@@ -1,3 +1,6 @@
+#ifndef FLOAT_FRAMEBUFFER_SHADER_TEST_H
+#define FLOAT_FRAMEBUFFER_SHADER_TEST_H
+"app/examples/float-framebuffer.shader_test",
 R"(
 [require]
 # Use a floating-point framebuffer format. This format is required to
@@ -21,3 +24,4 @@ clear
 draw rect -1 -1 2 2
 probe all rgba 3.141592653589793 42.0 1.4142135623730951 7.0
 )",
+#endif

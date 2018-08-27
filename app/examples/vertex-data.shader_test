@@ -1,3 +1,6 @@
+#ifndef VERTEX_DATA_SHADER_TEST_H
+#define VERTEX_DATA_SHADER_TEST_H
+"app/examples/vertex-data.shader_test",
 R"(
 [vertex shader binary]
 7230203 10000 80004 18 0 20011 1 6000b 1 4c534c47 6474732e 3035342e 0 3000e 0 1
@@ -62,3 +65,4 @@ relative probe rect rgb (0.5, 0, 0.5, 0.5) (0, 1, 0)
 relative probe rect rgb (0, 0.5, 0.5, 0.5) (0, 0, 1)
 relative probe rect rgb (0.5, 0.5, 0.5, 0.5) (0.5, 0, 0.5)
 )",
+#endif

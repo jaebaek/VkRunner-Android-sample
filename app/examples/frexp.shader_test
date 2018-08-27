@@ -1,3 +1,6 @@
+#ifndef FREXP_SHADER_TEST_H
+#define FREXP_SHADER_TEST_H
+"app/examples/frexp.shader_test",
 R"(
 [require]
 shaderFloat64
@@ -51,3 +54,4 @@ uniform ivec4 64 -1021 -1021 1024 1024
 draw rect -1 -1 2 2
 probe all rgba 0.0 1.0 0.0 1.0
 )",
+#endif

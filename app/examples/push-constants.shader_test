@@ -1,3 +1,6 @@
+#ifndef PUSH_CONSTANTS_SHADER_TEST_H
+#define PUSH_CONSTANTS_SHADER_TEST_H
+"app/examples/push-constants.shader_test",
 R"(
 [vertex shader passthrough]
 
@@ -35,3 +38,4 @@ probe rect rgba (1, 1, 81, 122) (1, 1, 1, 1)
 probe rect rgba (85, 1, 163, 122) (0, 1, 0, 1)
 probe rect rgba (0, 126, 250, 122) (0, 1, 0, 1)
 )",
+#endif

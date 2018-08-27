@@ -1,3 +1,6 @@
+#ifndef SSBO_SHADER_TEST_H
+#define SSBO_SHADER_TEST_H
+"app/examples/ssbo.shader_test",
 R"(
 [require]
 fragmentStoresAndAtomics
@@ -37,3 +40,4 @@ probe ssbo vec3 3 16 == 3 4 5
 probe ssbo uint 3 28 < 4
 probe ssbo uint 3 28 == 3
 )",
+#endif

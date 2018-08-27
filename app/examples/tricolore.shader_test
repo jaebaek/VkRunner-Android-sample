@@ -1,3 +1,6 @@
+#ifndef TRICOLORE_SHADER_TEST_H
+#define TRICOLORE_SHADER_TEST_H
+"app/examples/tricolore.shader_test",
 R"(
 [vertex shader passthrough]
 
@@ -21,3 +24,4 @@ probe rect rgba (1, 0, 81, 250) (1, 0, 0, 1)
 probe rect rgba (85, 0, 81, 250) (1, 1, 1, 1)
 probe rect rgba (168, 0, 81, 250) (0, 0, 1, 1)
 )",
+#endif
