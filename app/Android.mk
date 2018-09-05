@@ -28,12 +28,12 @@ VKRUNNER_PATH:= $(LOCAL_PATH)/../external/vkrunner
 
 include $(CLEAR_VARS)
 LOCAL_CPP_EXTENSION := .cc .cpp .cxx
-LOCAL_SRC_FILES:=test.cpp
+LOCAL_SRC_FILES:=test.cpp vulkan_wrapper.cpp
 LOCAL_MODULE:=vkrunner_test
 LOCAL_LDLIBS:=-landroid -llog
 LOCAL_CXXFLAGS:=-std=c++11 -fno-exceptions -fno-rtti -Werror
 LOCAL_STATIC_LIBRARIES=vkrunner
-LOCAL_C_INCLUDES := $(VKRUNNER_PATH)
+LOCAL_C_INCLUDES := $(VKRUNNER_PATH) $(LOCAL_PATH)
 include $(BUILD_SHARED_LIBRARY)
 
 include $(VKRUNNER_PATH)/Android.mk
